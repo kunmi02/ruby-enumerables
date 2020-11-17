@@ -31,4 +31,13 @@ module Enumerable
     end
     new_array
   end
+
+  def my_inject
+    i = 1, net = self[0]
+    while i < length
+      net = yield(net, self[i])
+      i += 1
+    end
+    net
+  end
 end
