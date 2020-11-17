@@ -11,9 +11,10 @@ module Enumerable
 
   def my_count
     if block_given?
-      i = 0, count = 0
+      i = 0
+      count = 0
       while i < length
-        count += 1 if yield(i)
+        count += 1 if yield(self[i])
 
         i += 1
       end
@@ -23,17 +24,19 @@ module Enumerable
     end
   end
 
-  def my_map
-    i = 0, new_array = []
+  def my_map(&proc1)
+    i = 0
+    new_array = []
     while i < length
-      new_array.push(yield(i))
+      new_array.push(proc1.call(self[i]))
       i += 1
     end
     new_array
   end
 
   def my_inject
-    i = 1, net = self[0]
+    i = 1
+    net = self[0]
     while i < length
       net = yield(net, self[i])
       i += 1
