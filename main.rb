@@ -22,4 +22,13 @@ module Enumerable
       length
     end
   end
+
+  def my_map
+    i = 0, new_array = []
+    while i < length
+      new_array.push(yield(i))
+      i += 1
+    end
+    new_array
+  end
 end
