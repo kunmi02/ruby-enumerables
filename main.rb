@@ -8,4 +8,18 @@ module Enumerable
     end
     true
   end
+
+  def my_count
+    if block_given?
+      i = 0, count = 0
+      while i < length
+        count += 1 if yield(i)
+
+        i += 1
+      end
+      count
+    else
+      length
+    end
+  end
 end
