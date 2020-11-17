@@ -61,6 +61,27 @@ def multiply_els(array)
   array.my_inject { |sum, item| sum * item }
 end
 
+puts('# my_none test')
+
+puts('## True')
+puts([1, 2, 3, 4].my_none { |item| item == 5 })
+
+puts('## False')
+puts([1, 2, 3, 4].my_none { |item| item == 4 })
+
+puts('# my_count test')
+
+puts('## With Condition')
+puts([1, 4, 3, 4].my_count { |item| item == 4 })
+
+puts('## Without Condition')
+puts([1, 4, 3, 4].my_count)
+
+puts('# my_inject test')
+puts([1, 4, 3, 4].my_inject { |sum, item| sum + item })
+
+puts('# multiply_els test')
+
 puts('# my_map test')
 proc1 = proc do |item|
   item + 1
