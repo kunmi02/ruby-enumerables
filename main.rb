@@ -7,11 +7,11 @@ module Enumerable
 
   def my_each_with_index
     i = 0
-		self.my_each do |item|
-			yield(item, i)
-			i += 1
-		end
-		self
+    my_each do |item|
+      yield(item, i)
+      i += 1
+    end
+    self
   end
 
   def my_select
@@ -36,7 +36,7 @@ module Enumerable
       my_each { |item| return true if yield(item) }
       false
     elsif data.nil?
-      my_each { |n| return true if !n.nil?}
+      my_each { |n| return true unless n.nil?}
     elsif !data.nil? && (data.is_a? Class)
       my_each { |n| return true if n.class == data }
     else
@@ -82,13 +82,13 @@ module Enumerable
 
   def my_inject(*data)
     if block_given?
-      net = data[0] ? yield(self.first, data[0]) : self.first
+      net = data[0] ? yield(first, data[0]) : first
       my_each_with_index { |item, index| net = yield(net, item) if index != 0 }
     elsif data[0] && data[1]
       net = data[0]
       my_each { |item| net = net.send(data[1], item) }
     elsif data[0]
-      net = self.first
+      net = first
       my_each_with_index { |item, index| net = net.send(data[0], item) if index != 0 }
     end
     net
