@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/ModuleLength
 module Enumerable
   def my_each
     i = 0
@@ -56,11 +56,16 @@ module Enumerable
 
   def my_none?(data = nil)
     if block_given?
-      my_each { |item| return false if yield(item) }
-    elsif !data.nil?
-      my_each { |item| return false if item == data }
+      my_each { |item| return false unless yield(item) == false }
+      return true
+    elsif data.nil?
+      my_each { |n| return false unless n.nil? || n == false }
+    elsif !data.nil? && (data.is_a? Class)
+      my_each { |n| return false unless n.class != data }
+    elsif !data.nil? && (data.is_a? Regexp)
+      my_each { |n| return false if data.match(n) }
     else
-      my_each { |item| return false if !item.nil? || item != false }
+      my_each { |n| return false unless n != data }
     end
     true
   end
@@ -106,7 +111,7 @@ module Enumerable
   end
 end
 
-# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/ModuleLength
 
 def multiply_els(array)
   array.my_inject { |sum, item| sum * item }
