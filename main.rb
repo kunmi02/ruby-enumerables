@@ -1,7 +1,10 @@
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
 module Enumerable
   def my_each
-    for i in self
-      yield(i)
+    i = 0
+    while i < to_a.length
+      yield(to_a[i])
+      i += 1
     end
   end
 
@@ -95,6 +98,8 @@ module Enumerable
     net
   end
 end
+
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
 
 def multiply_els(array)
   array.my_inject { |sum, item| sum * item }
