@@ -19,11 +19,27 @@ module Enumerable
     result
   end
 
-  def my_all?
-    my_each do |e|
-      return false unless yield(e)
+  def my_all?(data = nil)
+    if block_given?
+      my_each do |e|
+        return false unless yield(e)
+      end
     end
     true
+  end
+
+  def my_any?(arg = nil)
+    if block_given?
+      my_each { |item| return true if yield(item) }
+      false
+    elsif arg.nil?
+      my_each { |n| return true if !n.nil?}
+    elsif !arg.nil? && (arg.is_a? Class)
+      my_each { |n| return true if n.class == arg }
+    else
+      my_each { |n| return true if n == arg }
+    end
+    false
   end
 
   def my_none?(data = nil)
@@ -163,10 +179,10 @@ end
 # puts
 
 # 9. my_inject
-puts 'my_inject'
-puts '---------'
-p [1, 2, 3, 4].my_inject(10) { |accum, elem| accum + elem } # => 20
-p [1, 2, 3, 4].my_inject { |accum, elem| accum + elem } # => 10
-p [5, 1, 2].my_inject('+') # => 8
-p (5..10).my_inject(2, :*) # should return 302400
-p (5..10).my_inject(4) { |prod, n| prod * n } # should return 604800
+# puts 'my_inject'
+# puts '---------'
+# p [1, 2, 3, 4].my_inject(10) { |accum, elem| accum + elem } # => 20
+# p [1, 2, 3, 4].my_inject { |accum, elem| accum + elem } # => 10
+# p [5, 1, 2].my_inject('+') # => 8
+# p (5..10).my_inject(2, :*) # should return 302400
+# p (5..10).my_inject(4) { |prod, n| prod * n } # should return 604800
