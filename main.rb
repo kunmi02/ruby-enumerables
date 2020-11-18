@@ -27,9 +27,16 @@ module Enumerable
 
   def my_all?(data = nil)
     if block_given?
-      my_each do |e|
-        return false unless yield(e)
-      end
+      my_each { |item| return false if yield(item) == false }
+      return true
+    elsif data.nil?
+      my_each { |n| return false if n.nil? || n == false }
+    elsif !data.nil? && (data.is_a? Class)
+      my_each { |n| return false if n.class != data }
+    elsif !data.nil? && (data.is_a? Regexp)
+      my_each { |n| return false unless data.match(n) }
+    else
+      my_each { |n| return false if n != data }
     end
     true
   end
