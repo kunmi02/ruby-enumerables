@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 module Enumerable
   def my_each
     i = 0
@@ -99,7 +99,7 @@ module Enumerable
   end
 end
 
-# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
 def multiply_els(array)
   array.my_inject { |sum, item| sum * item }
