@@ -105,6 +105,7 @@ module Enumerable
   end
 
   def my_inject(*data)
+    (raise LocalJumpError if !block_given? && data[0].nil? && data[1].nil?)
     if block_given?
       net = data[0] ? yield(first, data[0]) : first
       drop(1).my_each { |item| net = yield(net, item) }
