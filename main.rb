@@ -54,6 +54,8 @@ module Enumerable
       my_each { |n| return true unless n.nil? }
     elsif data.is_a? Class
       my_each { |n| return true if n.instance_of?(data) }
+    elsif data.is_a? Regexp
+      my_each { |n| return true if data.match(n) }
     else
       my_each { |n| return true if n == data }
     end
