@@ -96,6 +96,8 @@ module Enumerable
       my_each { |item| new_array.push(proc1.call(item)) }
     elsif block_given?
       my_each { |item| new_array.push(yield(item)) }
+    elsif !block_given?
+      return to_enum(my_map)
     else
       new_array = self
     end
