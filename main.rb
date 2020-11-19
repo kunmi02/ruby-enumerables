@@ -128,4 +128,3 @@ end
 def multiply_els(array)
   array.my_inject { |sum, item| sum * item }
 end
-
