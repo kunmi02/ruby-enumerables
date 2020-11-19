@@ -129,4 +129,3 @@ def multiply_els(array)
   array.my_inject { |sum, item| sum * item }
 end
 
-p [2 ,3, 4].my_all?(Integer)
