@@ -8,6 +8,7 @@ module Enumerable
       yield(to_a[i])
       i += 1
     end
+    self
   end
 
   def my_each_with_index
@@ -38,7 +39,7 @@ module Enumerable
     elsif data.nil?
       my_each { |n| return false if n.nil? || n == false }
     elsif !data.nil? && (data.is_a? Class)
-      my_each { |n| return false if n.class != data }
+      my_each { |n| return false unless n.instance_of?(data) }
     elsif !data.nil? && (data.is_a? Regexp)
       my_each { |n| return false unless data.match(n) }
     else
@@ -51,7 +52,7 @@ module Enumerable
     if block_given?
       my_each { |item| return true if yield(item) }
     elsif data.nil?
-      my_each { |n| return true unless n.nil? }
+      my_each { |n| return true if n.nil? }
     elsif data.is_a? Class
       my_each { |n| return true if n.instance_of?(data) }
     elsif data.is_a? Regexp
@@ -69,7 +70,7 @@ module Enumerable
     elsif data.nil?
       my_each { |n| return false unless n.nil? || n == false }
     elsif !data.nil? && (data.is_a? Class)
-      my_each { |n| return false unless n.class != data }
+      my_each { |n| return false if n.instance_of?(data) }
     elsif !data.nil? && (data.is_a? Regexp)
       my_each { |n| return false if data.match(n) }
     else
@@ -85,7 +86,7 @@ module Enumerable
     elsif !data.nil?
       my_each { |item| count += 1 if item == data }
     else
-      count = length
+      count = !defined?(length).nil? ? length : size
     end
     count
   end
@@ -97,7 +98,7 @@ module Enumerable
     elsif block_given?
       my_each { |item| new_array.push(yield(item)) }
     elsif !block_given?
-      return to_enum(my_map)
+      return to_enum(:my_map)
     else
       new_array = self
     end
@@ -127,3 +128,5 @@ end
 def multiply_els(array)
   array.my_inject { |sum, item| sum * item }
 end
+
+p [2 ,3, 4].my_all?(Integer)
