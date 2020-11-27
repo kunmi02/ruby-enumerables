@@ -83,6 +83,10 @@ module Enumerable
     count = 0
     if block_given?
       my_each { |item| count += 1 if yield(item) }
+    elsif !data.nil? && (data.is_a? Class)
+      my_each { |item| count += 1 if item.instance_of?(data) }
+    elsif !data.nil? && (data.is_a? Regexp)
+      my_each { |item| count += 1 if data.match(item) }
     elsif !data.nil?
       my_each { |item| count += 1 if item == data }
     else
